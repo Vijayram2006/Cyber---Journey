@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vijay's Cyber Study Journal</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Fraunces:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f6f3;
+    --card: #ffffff;
+    --border: #e5e3dc;
+    --text: #1a1a1a;
+    --muted: #9b9b8e;
+    --accent: #2d6a4f;
+    --accent2: #1e3a5f;
+    --accent3: #c44b1e;
+    --accent4: #7b5ea7;
+    --yellow: #f5c842;
+    --tag-bg: #eeecea;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Fraunces', Georgia, serif;
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .journal {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* Top bar */
+  .topbar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  .topbar .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+
+  /* Header */
+  .page-header {
+    margin-bottom: 2.5rem;
+    border-bottom: 2px solid var(--text);
+    padding-bottom: 1.5rem;
+  }
+
+  .page-emoji { font-size: 2.5rem; margin-bottom: 0.5rem; }
+
+  .page-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  .page-meta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .meta-tag.green { background: rgba(45,106,79,0.1); color: var(--accent); border-color: rgba(45,106,79,0.2); }
+  .meta-tag.blue { background: rgba(30,58,95,0.1); color: var(--accent2); border-color: rgba(30,58,95,0.2); }
+  .meta-tag.red { background: rgba(196,75,30,0.1); color: var(--accent3); border-color: rgba(196,75,30,0.2); }
+
+  /* Day entry */
+  .day-entry {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--tag-bg);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .day-header:hover { background: #e8e6e0; }
+
+  .day-left {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .day-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .day-info h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .day-info .date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .day-score {
+    display: flex;
+    gap: 4px;
+  }
+
+  .score-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+  }
+
+  .score-dot.filled { background: var(--accent); border-color: var(--accent); }
+
+  .chevron {
+    font-size: 0.7rem;
+    color: var(--muted);
+    transition: transform 0.2s;
+    margin-left: 0.5rem;
+  }
+
+  .chevron.open { transform: rotate(180deg); }
+
+  /* Day body */
+  .day-body {
+    padding: 1.5rem;
+    display: none;
+  }
+
+  .day-body.open { display: block; }
+
+  /* Section blocks */
+  .block {
+    margin-bottom: 1.5rem;
+  }
+
+  .block:last-child { margin-bottom: 0; }
+
+  .block-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .block-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Checklist */
+  .checklist { list-style: none; }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    font-size: 0.88rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .checklist li:last-child { border-bottom: none; }
+
+  .check-box {
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .check-box.checked {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  .check-box.checked + span { text-decoration: line-through; color: var(--muted); }
+
+  /* Notes area */
+  .note-area {
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    min-height: 80px;
+    outline: none;
+    width: 100%;
+    font-family: 'Fraunces', serif;
+    color: var(--text);
+    resize: none;
+  }
+
+  .note-area:focus {
+    border-color: var(--accent);
+    background: white;
+  }
+
+  .note-area::placeholder { color: var(--muted); font-style: italic; }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .stat-box {
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.8rem;
+    text-align: center;
+  }
+
+  .stat-box .s-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-box .s-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* Energy selector */
+  .energy-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .energy-btn {
+    font-size: 1.3rem;
+    background: var(--tag-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .energy-btn:hover, .energy-btn.selected {
+    border-color: var(--accent);
+    background: rgba(45,106,79,0.1);
+    transform: scale(1.05);
+  }
+
+  /* Topic tags */
+  .topic-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .topic-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .topic-tag.cyber { background: rgba(30,58,95,0.08); color: var(--accent2); border-color: rgba(30,58,95,0.2); }
+  .topic-tag.fitness { background: rgba(196,75,30,0.08); color: var(--accent3); border-color: rgba(196,75,30,0.2); }
+  .topic-tag.cricket { background: rgba(45,106,79,0.08); color: var(--accent); border-color: rgba(45,106,79,0.2); }
+  .topic-tag.active { opacity: 0.5; text-decoration: line-through; }
+
+  /* Add day button */
+  .add-day-btn {
+    width: 100%;
+    padding: 1rem;
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .add-day-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(45,106,79,0.04);
+  }
+
+  /* Progress tracker */
+  .progress-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .progress-section h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .progress-item {
+    margin-bottom: 1rem;
+  }
+
+  .progress-item:last-child { margin-bottom: 0; }
+
+  .prog-label {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .prog-bar {
+    height: 6px;
+    background: var(--tag-bg);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .prog-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 1s ease;
+  }
+
+  .prog-fill.green { background: var(--accent); }
+  .prog-fill.blue { background: var(--accent2); }
+  .prog-fill.orange { background: var(--accent3); }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+
+  /* Quote */
+  .quote-block {
+    border-left: 3px solid var(--accent);
+    padding: 0.8rem 1.2rem;
+    background: rgba(45,106,79,0.05);
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 480px) {
+    .stats-row { grid-template-columns: repeat(3, 1fr); }
+    .page-title { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+<div class="journal">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="dot"></div>
+    <span>VIJAY · CYBERSECURITY JOURNEY · JUN 2026 → JUN 2027</span>
+  </div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-emoji">📓</div>
+    <div class="page-title">Cyber Study Journal</div>
+    <div class="page-meta">
+      <span class="meta-tag green">Active</span>
+      <span class="meta-tag blue">Month 1 of 12</span>
+      <span class="meta-tag red">Target: 10 LPA</span>
+      <span class="meta-tag">Jun 2026</span>
+    </div>
+  </div>
+
+  <!-- Quote -->
+  <div class="quote-block">
+    "Show up every single day — even when you don't feel like it. That's the only secret."
+  </div>
+
+  <!-- Progress Overview -->
+  <div class="progress-section">
+    <h3>📊 Month 1 Progress</h3>
+    <div class="progress-item">
+      <div class="prog-label"><span>Cyber Study Days</span><span id="cyberPct">3%</span></div>
+      <div class="prog-bar"><div class="prog-fill green" id="cyberBar" style="width:3%"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="prog-label"><span>Fitness Streak</span><span id="fitPct">3%</span></div>
+      <div class="prog-bar"><div class="prog-fill blue" id="fitBar" style="width:3%"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="prog-label"><span>Cricket Practice</span><span id="cricPct">3%</span></div>
+      <div class="prog-bar"><div class="prog-fill orange" id="cricBar" style="width:3%"></div></div>
+    </div>
+  </div>
+
+  <!-- DAY 1 Entry (filled - sample) -->
+  <div class="day-entry">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-left">
+        <div class="day-num">01</div>
+        <div class="day-info">
+          <h3>Foundation — CIA Triad & Attack Types</h3>
+          <div class="date">Jun 2, 2026 · Monday</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.8rem">
+        <div class="day-score">
+          <div class="score-dot filled"></div>
+          <div class="score-dot filled"></div>
+          <div class="score-dot filled"></div>
+          <div class="score-dot filled"></div>
+          <div class="score-dot"></div>
+        </div>
+        <span class="chevron open">▼</span>
+      </div>
+    </div>
+    <div class="day-body open">
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="s-val">2<span style="font-size:0.7rem">hrs</span></div>
+          <div class="s-label">Study Time</div>
+        </div>
+        <div class="stat-box">
+          <div class="s-val">2<span style="font-size:0.7rem">km</span></div>
+          <div class="s-label">Run</div>
+        </div>
+        <div class="stat-box">
+          <div class="s-val">4<span style="font-size:0.7rem">/5</span></div>
+          <div class="s-label">Day Score</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-title">💻 Cyber Study</div>
+        <ul class="checklist">
+          <li><div class="check-box checked" onclick="toggleCheck(this)">✓</div><span>CIA Triad — Confidentiality, Integrity, Availability</span></li>
+          <li><div class="check-box checked" onclick="toggleCheck(this)">✓</div><span>Authenticity + Non-Repudiation concepts</span></li>
+          <li><div class="check-box checked" onclick="toggleCheck(this)">✓</div><span>5 Attack types — Passive, Active, Close-in, Insider, Distribution</span></li>
+          <li><div class="check-box checked" onclick="toggleCheck(this)">✓</div><span>Introduction to Hacking (theory)</span></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Practical — Kali Linux terminal practice</span></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <div class="block-title">📝 What I Learned</div>
+        <textarea class="note-area" placeholder="Write what you understood in your own words...">CIA Triad is the foundation of cybersecurity. Confidentiality = only authorized access. Integrity = data not tampered. Availability = data accessible when needed. Learned 5 types of attacks — passive attacks just observe (sniffing), active attacks directly interact with target (DoS, MITM).</textarea>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🖥️ Practical / Tools Used</div>
+        <textarea class="note-area" placeholder="Commands tried, tools used, screenshots..." style="min-height:60px">No practical today — only theory via Rinex platform. Tomorrow: start Linux terminal commands on Kali.</textarea>
+      </div>
+
+      <div class="block">
+        <div class="block-title">😤 Struggles / Doubts</div>
+        <textarea class="note-area" placeholder="What confused you? What to revisit?" style="min-height:60px">Difference between Close-in attack and Insider attack slightly confusing. Need to revisit.</textarea>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🏃 Fitness & Cricket</div>
+        <ul class="checklist">
+          <li><div class="check-box checked" onclick="toggleCheck(this)">✓</div><span>Morning run — 2km completed</span></li>
+          <li><div class="check-box checked" onclick="toggleCheck(this)">✓</div><span>Cricket drills — footwork 20 min</span></li>
+          <li><div class="check-box checked" onclick="toggleCheck(this)">✓</div><span>Gym — upper body workout</span></li>
+          <li><div class="check-box checked" onclick="toggleCheck(this)">✓</div><span>Stretching — cool down done</span></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <div class="block-title">⚡ Energy Level</div>
+        <div class="energy-row">
+          <button class="energy-btn" onclick="selectEnergy(this)">😴 Low</button>
+          <button class="energy-btn" onclick="selectEnergy(this)">😐 Medium</button>
+          <button class="energy-btn selected" onclick="selectEnergy(this)">💪 High</button>
+          <button class="energy-btn" onclick="selectEnergy(this)">🔥 Beast Mode</button>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🎯 Tomorrow Plan</div>
+        <textarea class="note-area" placeholder="What will you do tomorrow?" style="min-height:60px">Linux fundamentals — file system, chmod, permissions. TryHackMe Linux Fundamentals Part 1. Run 2km again.</textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DAY 2 Entry (empty template) -->
+  <div class="day-entry">
+    <div class="day-header" onclick="toggleDay(this)">
+      <div class="day-left">
+        <div class="day-num">02</div>
+        <div class="day-info">
+          <h3>Linux Fundamentals</h3>
+          <div class="date">Jun 3, 2026 · Tuesday</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:0.8rem">
+        <div class="day-score">
+          <div class="score-dot"></div>
+          <div class="score-dot"></div>
+          <div class="score-dot"></div>
+          <div class="score-dot"></div>
+          <div class="score-dot"></div>
+        </div>
+        <span class="chevron">▼</span>
+      </div>
+    </div>
+    <div class="day-body">
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="s-val">—</div>
+          <div class="s-label">Study Time</div>
+        </div>
+        <div class="stat-box">
+          <div class="s-val">—</div>
+          <div class="s-label">Run</div>
+        </div>
+        <div class="stat-box">
+          <div class="s-val">—</div>
+          <div class="s-label">Day Score</div>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-title">💻 Cyber Study</div>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Linux file system — /etc, /var, /home</span></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Commands — ls, cd, pwd, mkdir, rm, cp, mv</span></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><span>File permissions — chmod, chown</span></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><span>TryHackMe Linux Fundamentals Part 1</span></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <div class="block-title">📝 What I Learned</div>
+        <textarea class="note-area" placeholder="Write what you understood in your own words..."></textarea>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🖥️ Practical / Commands Tried</div>
+        <textarea class="note-area" placeholder="e.g. whoami, ls -la, chmod 777 file.txt ..." style="min-height:60px"></textarea>
+      </div>
+
+      <div class="block">
+        <div class="block-title">😤 Struggles / Doubts</div>
+        <textarea class="note-area" placeholder="What confused you? What to revisit?" style="min-height:60px"></textarea>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🏃 Fitness & Cricket</div>
+        <ul class="checklist">
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Morning run — 2km</span></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Cricket drills</span></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Gym workout</span></li>
+          <li><div class="check-box" onclick="toggleCheck(this)"></div><span>Stretching</span></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <div class="block-title">⚡ Energy Level</div>
+        <div class="energy-row">
+          <button class="energy-btn" onclick="selectEnergy(this)">😴 Low</button>
+          <button class="energy-btn" onclick="selectEnergy(this)">😐 Medium</button>
+          <button class="energy-btn" onclick="selectEnergy(this)">💪 High</button>
+          <button class="energy-btn" onclick="selectEnergy(this)">🔥 Beast Mode</button>
+        </div>
+      </div>
+
+      <div class="block">
+        <div class="block-title">🎯 Tomorrow Plan</div>
+        <textarea class="note-area" placeholder="What will you do tomorrow?" style="min-height:60px"></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Add new day button -->
+  <button class="add-day-btn" onclick="alert('Daily entry add pannunga! Copy Day 2 template use pannunga 💪')">
+    + Add New Day Entry
+  </button>
+
+</div>
+
+<script>
+  function toggleDay(header) {
+    const body = header.nextElementSibling;
+    const chevron = header.querySelector('.chevron');
+    body.classList.toggle('open');
+    chevron.classList.toggle('open');
+  }
+
+  function toggleCheck(box) {
+    box.classList.toggle('checked');
+    box.textContent = box.classList.contains('checked') ? '✓' : '';
+    updateProgress();
+  }
+
+  function selectEnergy(btn) {
+    const row = btn.parentElement;
+    row.querySelectorAll('.energy-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  function updateProgress() {
+    const allChecks = document.querySelectorAll('.check-box');
+    const checked = document.querySelectorAll('.check-box.checked');
+    const pct = Math.round((checked.length / allChecks.length) * 100);
+    
+    document.getElementById('cyberBar').style.width = pct + '%';
+    document.getElementById('cyberPct').textContent = pct + '%';
+    document.getElementById('fitBar').style.width = Math.min(pct + 10, 100) + '%';
+    document.getElementById('fitPct').textContent = Math.min(pct + 10, 100) + '%';
+    document.getElementById('cricBar').style.width = pct + '%';
+    document.getElementById('cricPct').textContent = pct + '%';
+  }
+</script>
+</body>
+</html>
