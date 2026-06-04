@@ -12,7 +12,7 @@ by final year placements.
 ---
 
 ## 📊 Current Status
-- 🟢 Day: 01/365
+- 🟢 Day: 03/365
 - 🏆 Certifications: Working towards Security+
 - 🐛 Bug Bounties: 0 (starting Sep 2026)
 - 📝 Writeups: 0 (building...)
@@ -74,6 +74,7 @@ by final year placements.
 
 ## 📝 Latest Writeups
 - Day 1 — CIA Triad & Attack Types
+- Day 2 - Completed the setup for hacking laboratory
 
 ---
 
