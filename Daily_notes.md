@@ -14,3 +14,6 @@
 - VirtualBox installed
 - Kali Linux running
 - First commands tried: whoami, pwd, ls
+- Metasploitlab installed
+- Windows 7 pro installed
+- Setup for hacking laboratory completed.
