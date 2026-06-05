@@ -41,6 +41,59 @@
 - IPCONFIG , IPCONFIG /ALL
 - User Management Controll : NET USERS , NET USER USER_NAME PASS/ADD , NET USER USER_NAME /DELETE
 
+## 🖥️ Practical — Kali Linux
+
+### Commands Practiced
+- whoami — current user
+- pwd — current location
+- ls / ls -la — file listing
+- cd / cd .. / cd ~ — navigation
+- mkdir — folder create
+- touch — file create
+- echo "text" > file.txt — write to file
+- echo "text" >> file.txt — append to file
+- cat file.txt — read file
+- cat -n file.txt — read with line numbers
+- rm / rm -rf — delete file/folder
+- chmod 644 / 444 / 777 — permissions
+- ps aux | grep [name] — process search
+- kill -9 [PID] — kill process
+- ifconfig — network info
+- history 5 — last 5 commands
+- hostname — machine name
+- uname -a — OS details
+- free -h — memory usage
+- df -h — disk space
+
+### Key Learnings
+- > = overwrite, >> = append
+- ls = list files, pwd = location
+- chmod 644 = owner rw, others r
+- Linux case sensitive — firefox ≠ Firefox
+- history command = all past commands
+- rm -rf = folder + files delete
+
+### Challenge Score
+- Round 1: 11/15
+- Round 2: 11/15
+- Weak areas: spelling, pwd vs ls
+
+## 🏃 Fitness
+- Gym: ✅ (evening)
+
+## ⚡ Wins Today
+- Linux commands confident ah use panninen
+- kill -9 firefox — real process killed!
+- history command learned
+- Metasploitable first nmap scan
+
+## ❓ Doubts
+- hostname vs uname -a difference
+- chmod numbers — need more practice
+
+## 🎯 Tomorrow Plan
+- Linux permissions deep dive
+- Medium — first writeup start
 ## Practical Done
 - BitLocker — enabled on test drive
 - UAC — settings modified
@@ -48,3 +101,4 @@
 - CMD commands — all practiced
 - IPCONFIG /ALL — network info viewed
 - TASKKILL /PID — process killed
+- Metasploitable first nmap scan
