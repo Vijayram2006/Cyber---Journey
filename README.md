@@ -76,7 +76,7 @@ by final year placements.
 - Day 1 — CIA Triad & Attack Types
 - Day 2 - Completed the setup for hacking laboratory
 - Day 3 - Operating System Components
-- Day 3 - Basic commands in CMD
+- Day 4 - Basic commands in CMD
 
 ---
 
