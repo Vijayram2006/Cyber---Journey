@@ -17,3 +17,21 @@
 - Metasploitlab installed
 - Windows 7 pro installed
 - Setup for hacking laboratory completed.
+
+- # Day - Jun 4, 2026
+- ## Operating System Components
+- Pictorial representation
+- GUI vs CLI
+- File System
+- Security Feature in windows
+- Windows Defender Anti-Virus
+- Secure Boot
+- Smart Screen
+- User Account Control
+- Backup and Recovery
+- BitLocker Drive Encryption(Encryption for drives.)
+- Windows update
+- Windows Hello(Facial recoganisation)
+- Family option(Monitoring the other computers.)
+
+- ## Day - Jun 5, 2026
