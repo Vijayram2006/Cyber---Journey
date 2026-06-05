@@ -35,3 +35,8 @@
 - Family option(Monitoring the other computers.)
 
 - ## Day 4 - Jun 5, 2026
+- Commands Line Interfaces
+- Basic commands in CMD
+- Like DIR , CD.. , rmdir , echo file_name.txt , type file_name.txt , del file_name.txt , systeminfo , tasklist , TASKKILL / PID 4212
+- IPCONFIG , IPCONFIG /ALL
+- User Management Controll : NET USERS , NET USER USER_NAME PASS/ADD , NET USER USER_NAME /DELETE
