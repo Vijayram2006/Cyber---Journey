@@ -12,7 +12,7 @@ by final year placements.
 ---
 
 ## 📊 Current Status
-- 🟢 Day: 03/365
+- 🟢 Day: 04/365
 - 🏆 Certifications: Working towards Security+
 - 🐛 Bug Bounties: 0 (starting Sep 2026)
 - 📝 Writeups: 0 (building...)
