@@ -18,7 +18,7 @@
 - Windows 7 pro installed
 - Setup for hacking laboratory completed.
 
-- # Day - Jun 4, 2026
+- # Day 3 - Jun 4, 2026
 - ## Operating System Components
 - Pictorial representation
 - GUI vs CLI
@@ -34,4 +34,4 @@
 - Windows Hello(Facial recoganisation)
 - Family option(Monitoring the other computers.)
 
-- ## Day - Jun 5, 2026
+- ## Day 4 - Jun 5, 2026
