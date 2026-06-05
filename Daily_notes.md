@@ -40,3 +40,11 @@
 - Like DIR , CD.. , rmdir , echo file_name.txt , type file_name.txt , del file_name.txt , systeminfo , tasklist , TASKKILL / PID 4212
 - IPCONFIG , IPCONFIG /ALL
 - User Management Controll : NET USERS , NET USER USER_NAME PASS/ADD , NET USER USER_NAME /DELETE
+
+## Practical Done
+- BitLocker — enabled on test drive
+- UAC — settings modified
+- Created user: cyber_rex
+- CMD commands — all practiced
+- IPCONFIG /ALL — network info viewed
+- TASKKILL /PID — process killed
