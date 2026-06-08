@@ -1,4 +1,4 @@
-DAY 6 â€” COMPLETE PENETRATION TEST REPORT
+ COMPLETE PENETRATION TEST REPORT
 ## Metasploitable 2 (192.168.234.129) â€” Full Assessment
 
 *Date:* Jun 7, 2026
@@ -10,13 +10,13 @@ DAY 6 â€” COMPLETE PENETRATION TEST REPORT
 
 ---
 
-# PART 1 â€” EXECUTIVE SUMMARY
+# PART 1 EXECUTIVE SUMMARY
 
 Conducted comprehensive penetration test on Metasploitable 2 target system. Identified 24 open ports with 5 critical vulnerabilities. Successfully exploited vsftpd 2.3.4 backdoor (CVE-2011-2523) resulting in root-level shell access.
 
 ---
 
-# PART 2 â€” RECONNAISSANCE (NMAP SCAN)
+# PART 2  RECONNAISSANCE (NMAP SCAN)
 
 ## Scan Commands
 nmap -sV 192.168.234.129
@@ -41,7 +41,7 @@ Port 5900| VNC      | Protocol 3.3 | Weak Auth     | CRITICAL
 
 ---
 
-# PART 3 â€” VULNERABILITY ASSESSMENT
+# PART 3 VULNERABILITY ASSESSMENT
 
 ## vsftpd 2.3.4 (Port 21)
 - CVE ID: CVE-2011-2523
@@ -52,7 +52,7 @@ Port 5900| VNC      | Protocol 3.3 | Weak Auth     | CRITICAL
 
 ---
 
-# PART 4 â€” EXPLOITATION
+# PART 4 EXPLOITATION
 
 ## Metasploit Commands
 msfconsole
@@ -69,7 +69,7 @@ run
 
 ---
 
-# PART 5 â€” POST-EXPLOITATION
+# PART 5  POST-EXPLOITATION
 
 ## Shell Access
 meterpreter > shell
