@@ -12,7 +12,7 @@ by final year placements.
 ---
 
 ## 📊 Current Status
-- 🟢 Day: 04/365
+- 🟢 Day: 05/365
 - 🏆 Certifications: Working towards Security+
 - 🐛 Bug Bounties: 0 (starting Sep 2026)
 - 📝 Writeups: 0 (building...)
@@ -77,7 +77,7 @@ by final year placements.
 - Day 2 - Completed the setup for hacking laboratory
 - Day 3 - Operating System Components
 - Day 4 - Basic commands in CMD
-
+- Day 5 - RDBMS and installing MYSQl in KALI 
 ---
 
 ## 📬 Connect
